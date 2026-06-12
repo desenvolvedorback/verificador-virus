@@ -1,0 +1,12 @@
+[
+    {
+        "nome": "dados_temporarios.json",
+        "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "status": "Erro na verifica\u00e7\u00e3o"
+    },
+    {
+        "nome": "dados_temporarios.json",
+        "hash": "d91ef6e96113f232da038c364bd33a3b2e7336595eabdb8a92475d2d08d4ae15",
+        "status": "Arquivo novo (N\u00e3o encontrado na base de dados)"
+    }
+]
