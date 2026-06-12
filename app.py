@@ -2,6 +2,7 @@ import os
 import json
 import hashlib
 import requests
+import time
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
@@ -68,10 +69,21 @@ def upload_file():
             status_resultado = f"Malicioso ({malicious} detecções)"
         else:
             status_resultado = "Seguro"
+            
     elif response.status_code == 404:
-        # Se der 404, significa que o VirusTotal nunca viu esse arquivo antes. 
-        # Na versão gratuita, você teria que fazer o upload do arquivo completo para eles analisarem.
-        status_resultado = "Arquivo novo (Não encontrado na base de dados)"
+        # Se der 404, faz o upload do arquivo completo para análise
+        url_upload = "https://www.virustotal.com/api/v3/files"
+        
+        # Reseta o ponteiro do arquivo para permitir a leitura no envio
+        arquivo.seek(0)
+        files = {"file": (arquivo.filename, arquivo.stream, arquivo.content_type)}
+        
+        upload_response = requests.post(url_upload, headers=headers, files=files)
+        
+        if upload_response.status_code == 200:
+            status_resultado = "Enviado p/ Análise (Atualize a página em instantes)"
+        else:
+            status_resultado = "Erro ao enviar arquivo para análise"
     else:
         status_resultado = "Erro na verificação"
 
